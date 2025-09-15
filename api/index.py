@@ -1,11 +1,13 @@
+from flask import Flask
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from app import app
-from werkzeug.wrappers import Request, Response
 
-def handler(request):
-    # For Vercel Python runtime, we get a Request object
-    with app.request_context(request.environ):
-        response = app.full_dispatch_request()
-        return response
+# Add the parent directory to the path to import app
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
+from app import app
+
+# This is the entry point for Vercel
+# Vercel will automatically detect this as a Flask app
+if __name__ == "__main__":
+    app.run()
